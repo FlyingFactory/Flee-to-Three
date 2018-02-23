@@ -84,10 +84,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\CameraManager.cs" />
+    <Compile Include="Assets\Scripts\Filepaths.cs" />
     <Compile Include="Assets\Scripts\IHasSprite.cs" />
     <Compile Include="Assets\Scripts\ITimeStep.cs" />
     <Compile Include="Assets\Scripts\Kinematics.cs" />
     <Compile Include="Assets\Scripts\PlayerManager.cs" />
+    <Compile Include="Assets\Scripts\PrefabCreator.cs" />
     <Compile Include="Assets\Scripts\PrefabResources.cs" />
     <Compile Include="Assets\Scripts\Projectile.cs" />
     <Compile Include="Assets\Scripts\SpriteController.cs" />

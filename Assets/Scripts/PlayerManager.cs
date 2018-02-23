@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Players controls tied to Update(). Spawns player unit in Start().
+/// </summary>
 public class PlayerManager : MonoBehaviour {
 
     public static Unit player; 
@@ -15,6 +18,18 @@ public class PlayerManager : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown(KeyCode.W)) {
             player.Jump();
+        }
+        if (Input.GetKeyDown(KeyCode.A)) {
+            player.Left();
+        }
+        if (Input.GetKeyDown(KeyCode.D)) {
+            player.Right();
+        }
+        if (Input.GetKeyUp(KeyCode.A)) {
+            player.Right();
+        }
+        if (Input.GetKeyUp(KeyCode.D)) {
+            player.Left();
         }
         if (Input.GetMouseButtonDown(0)) {
             player.Shoot();
