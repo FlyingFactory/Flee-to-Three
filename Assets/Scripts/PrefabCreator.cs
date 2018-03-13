@@ -7,26 +7,44 @@ using UnityEngine;
 /// </summary>
 public class PrefabCreator : MonoBehaviour {
 
-    // This block handles sprites. Can copypaste and change types/names for new prefab types. Remember to add an entry to Update as well.
+    // This block handles sprites. Copy-paste and change types/names for new prefab types. Remember to add an entry to Update/FixedUpdate as well.
     public SpriteController SpritePrefab;
-    public static List<IHasSprite> SpriteControllerQueue = new List<IHasSprite>();
+    public static List<ISprite> SpriteControllerQueue = new List<ISprite>();
 
-    /// <summary>
-    /// Creates a new sprite on next Update(). obj = script of the object the unit represents.
-    /// </summary>
-    public static void CreateSprite(IHasSprite obj) {
+    public static void CreateSprite(ISprite obj) {
         SpriteControllerQueue.Add(obj);
     }
     public void CreateSpriteFromList() {
         SpriteController newsprite = Instantiate<SpriteController>(SpritePrefab);
         newsprite.self = SpriteControllerQueue[0];
         SpriteControllerQueue.RemoveAt(0);
-    } // End of sprite-related block.
-	
+    } // End of sprite-related block. =================================================================================
 
-	void Update () {
+
+    // Colliders ======================================================================================================
+    public ColliderController ColliderPrefab;
+    public static List<ICollider> ColliderControllerQueue = new List<ICollider>();
+
+    public static void CreateCollider(ICollider obj) {
+        ColliderControllerQueue.Add(obj);
+    }
+    public void CreateColliderFromList() {
+        ColliderController newcollider = Instantiate<ColliderController>(ColliderPrefab);
+        newcollider.self = ColliderControllerQueue[0];
+        ColliderControllerQueue.RemoveAt(0);
+    } // End colliders ================================================================================================
+
+
+    //=================================================================================================================
+    void Update () {
         while (SpriteControllerQueue.Count > 0) {
             CreateSpriteFromList();
         }
 	}
+
+    void FixedUpdate() {
+        while (ColliderControllerQueue.Count > 0) {
+            CreateColliderFromList();
+        }
+    }
 }

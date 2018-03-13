@@ -18,9 +18,11 @@ public class TimeManager : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
-	}
+	/*void Update () {
+        foreach (ITimeStep u in Entities) {
+            u.TimeStep(Time.deltaTime);
+        }
+    }*/
 
     private void FixedUpdate() {
         foreach (ITimeStep u in Entities) {

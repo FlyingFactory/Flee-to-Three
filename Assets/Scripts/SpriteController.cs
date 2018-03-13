@@ -7,12 +7,20 @@ using UnityEngine;
 /// </summary>
 public class SpriteController : MonoBehaviour {
 
-    public IHasSprite self;
-    
-    /*public static SpriteController Create(IHasSprite obj) {
-        SpriteController p = Instantiate(PrefabResources.SpriteController);
-        p.self = obj;
-        return p;
+    private ISprite _self;
+    public ISprite self;
+        /*
+        get { return this._self; }
+        set {
+            ColliderController collide_controller = this.GetComponent<ColliderController>();
+            if (value is ICollider && !collide_controller) {
+                collide_controller = this.gameObject.AddComponent<ColliderController>();
+            }
+            if (value is ICollider) {
+                collide_controller.self = (ICollider)value;
+            }
+            this._self = value;
+        }
     }*/
 
     // Use this for initialization
@@ -23,6 +31,7 @@ public class SpriteController : MonoBehaviour {
             CameraManager.playersprite = this;
             CameraManager.playerFollowEnabled = true;
         }
+        EventManager.spriteDeath += SpriteDeathEvent;
     }
 	
 	// Update is called once per frame
@@ -33,5 +42,18 @@ public class SpriteController : MonoBehaviour {
     // Currently unused
     public void UpdateSprite() {
         gameObject.GetComponent<SpriteRenderer>().sprite = self.sprite;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if (self is ICollider) {
+            ((ICollider)self).CollisionEnter(collision, collision.gameObject.GetComponent<ICollider>());
+        }
+    }
+
+    private void SpriteDeathEvent(ISprite deadobject) {
+        if (deadobject == self) {
+            EventManager.spriteDeath -= SpriteDeathEvent;
+            Destroy(gameObject);
+        }
     }
 }

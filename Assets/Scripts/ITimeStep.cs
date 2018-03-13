@@ -4,7 +4,7 @@ using UnityEngine;
 
 /// <summary>
 /// TimeStep() |
-/// Interface for all classes that respond to game-time; i.e. that which stops when you press pause.
+/// For all classes that respond to game-time; i.e. that which stops when you press pause.
 /// </summary>
 public interface ITimeStep {
 

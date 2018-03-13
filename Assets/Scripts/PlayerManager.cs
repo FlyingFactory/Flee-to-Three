@@ -11,7 +11,8 @@ public class PlayerManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        PlayerManager.player = new Unit();
+        PlayerManager.player = new Unit("tyrant");
+        player.team = Team.player;
     }
 	
 	// Update is called once per frame

@@ -85,10 +85,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\CameraManager.cs" />
+    <Compile Include="Assets\Scripts\ColliderController.cs" />
+    <Compile Include="Assets\Scripts\EnemyGenerator.cs" />
+    <Compile Include="Assets\Scripts\Enums.cs" />
+    <Compile Include="Assets\Scripts\EventManager.cs" />
     <Compile Include="Assets\Scripts\Filepaths.cs" />
-    <Compile Include="Assets\Scripts\IHasSprite.cs" />
+    <Compile Include="Assets\Scripts\ICollider.cs" />
+    <Compile Include="Assets\Scripts\IDefenseData.cs" />
+    <Compile Include="Assets\Scripts\IKinematics.cs" />
+    <Compile Include="Assets\Scripts\ISprite.cs" />
     <Compile Include="Assets\Scripts\ITimeStep.cs" />
     <Compile Include="Assets\Scripts\Kinematics.cs" />
+    <Compile Include="Assets\Scripts\Platform.cs" />
     <Compile Include="Assets\Scripts\PlayerManager.cs" />
     <Compile Include="Assets\Scripts\PrefabCreator.cs" />
     <Compile Include="Assets\Scripts\PrefabResources.cs" />

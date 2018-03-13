@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// sprite |
-/// kinematics |
-/// All sprites will contain a kinematics, so use this for all sprites.
+/// All sprites have kinematics, so this inherits from kinematics.
 /// </summary>
-public interface IHasSprite {
+public interface ISprite : IKinematics {
 
 	Sprite sprite { get; set; }
     float spriteOrder { get; set; }
-
-    Kinematics kinematics { get; set; }
+    
+    AnimState animState { get; set; }
 }
