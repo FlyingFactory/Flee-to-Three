@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Platform : ICollider, ISprite {
 
+    public Platform(Vector2 pos, Vector2 size) : this(pos, size.x, size.y) { }
     public Platform(Vector2 pos, float w, float h) {
         kinematics.pos = pos;
         colliderwidthcs = w;

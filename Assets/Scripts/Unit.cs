@@ -9,7 +9,10 @@ public class Unit : ITimeStep, ISprite, IDefenseData, ICollider {
 
     public const float COLLISION_PADDING = 0.01f;
 
-    public Unit(string spritecode) {
+    public Unit(string spritecode) : this(spritecode, Vector2.zero) { }
+    public Unit(string spritecode, Vector2 pos) {
+        kinematics = new Kinematics();
+        kinematics.pos = pos;
         kinematics.g = 1;
         TimeManager.Entities.Add(this);
 
@@ -25,7 +28,7 @@ public class Unit : ITimeStep, ISprite, IDefenseData, ICollider {
         health = 100;
     }
 
-    private Kinematics _kinematics = new Kinematics();
+    private Kinematics _kinematics;
     public Kinematics kinematics {
         get { return _kinematics; }
         set { _kinematics = value; }
@@ -37,6 +40,7 @@ public class Unit : ITimeStep, ISprite, IDefenseData, ICollider {
 
     public void TimeStep(float dt) {
         kinematics.TimeStep(dt);
+        if (kinematics.pos.y == 0) isGrounded = true;
     }
 
     public Collider2D collider { get; set; }
@@ -67,7 +71,7 @@ public class Unit : ITimeStep, ISprite, IDefenseData, ICollider {
     public bool isGrounded = true; // To be used later when colliders are implemented
 
     public void Jump() {
-        if (kinematics.pos.y==0) {
+        if (isGrounded) { 
             kinematics.v += new Vector2(0, 15);
             isGrounded = false;
         }
@@ -117,21 +121,22 @@ public class Unit : ITimeStep, ISprite, IDefenseData, ICollider {
         if (my < mx) {
             if (kinematics.pos.y >= platform.kinematics.pos.y) {
                 kinematics.pos = new Vector2(kinematics.pos.x, platform.kinematics.pos.y + colliderheightcs + platform.colliderheightcs + COLLISION_PADDING);
-                kinematics.v = new Vector2(kinematics.v.x, 0);
+                kinematics.v = new Vector2(kinematics.v.x, Mathf.Max(0, kinematics.v.y));
+                isGrounded = true;
             }
             else {
                 kinematics.pos = new Vector2(kinematics.pos.x, platform.kinematics.pos.y - colliderheightcs - platform.colliderheightcs - COLLISION_PADDING);
-                kinematics.v = new Vector2(kinematics.v.x, 0);
+                //kinematics.v = new Vector2(kinematics.v.x, 0);
             }
         }
         else {
             if (kinematics.pos.x >= platform.kinematics.pos.x) {
                 kinematics.pos = new Vector2(platform.kinematics.pos.x + colliderwidthcs + platform.colliderwidthcs + COLLISION_PADDING, kinematics.pos.y);
-                kinematics.v = new Vector2(0, kinematics.v.y);
+                //kinematics.v = new Vector2(0, kinematics.v.y);
             }
             else {
                 kinematics.pos = new Vector2(platform.kinematics.pos.x - colliderwidthcs - platform.colliderwidthcs - COLLISION_PADDING, kinematics.pos.y);
-                kinematics.v = new Vector2(0, kinematics.v.y);
+                //kinematics.v = new Vector2(0, kinematics.v.y);
             }
         }
     }
