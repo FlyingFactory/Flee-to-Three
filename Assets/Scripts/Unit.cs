@@ -26,6 +26,13 @@ public class Unit : ITimeStep, ISprite, IDefenseData, ICollider {
 
         team = Team.wildlifegeneric;
         health = 100;
+
+        //initialize basic skill
+        jump = new Jump(this);
+        walkleft = new WalkLeft(this);
+        walkright = new WalkRight(this);
+        walkstop = new WalkStop(this);
+        attack = new Shoot(this); // 2 s cooldown
     }
 
     private Kinematics _kinematics;
@@ -40,6 +47,7 @@ public class Unit : ITimeStep, ISprite, IDefenseData, ICollider {
 
     public void TimeStep(float dt) {
         kinematics.TimeStep(dt);
+        attack.timeStep(dt);
         if (kinematics.pos.y == 0) isGrounded = true;
     }
 
@@ -70,24 +78,22 @@ public class Unit : ITimeStep, ISprite, IDefenseData, ICollider {
 
     public bool isGrounded = true; // To be used later when colliders are implemented
 
-    public void Jump() {
-        if (isGrounded) { 
-            kinematics.v += new Vector2(0, 15);
-            isGrounded = false;
-        }
-    }
+    public Skill jump;
+    public Skill walkright;
+    public Skill walkleft;
+    public Skill walkstop;
+    // Skills with cooldown
+    public CooldownSkill attack;
 
-    public void Shoot() {
-        new Projectile(kinematics.pos, new Vector2(12, 0));
-    }
+    public void Jump() { jump.execute(); }
 
-    public void Left() {
-        kinematics.v += new Vector2(-5, 0);
-    }
+    public void Attack() { attack.execute(); }
 
-    public void Right() {
-        kinematics.v += new Vector2(5, 0);
-    }
+    public void Left() { walkleft.execute(); }
+
+    public void Right() { walkright.execute();  }
+
+    public void Stop() { walkstop.execute(); }
 
     public void CollisionEnter(Collision2D collision, ICollider other, bool cont=false) {
         if (other is Projectile)

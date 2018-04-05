@@ -26,14 +26,11 @@ public class PlayerManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.D)) {
             player.Right();
         }
-        if (Input.GetKeyUp(KeyCode.A)) {
-            player.Right();
-        }
-        if (Input.GetKeyUp(KeyCode.D)) {
-            player.Left();
+        if (!Input.GetKeyDown(KeyCode.A) && !Input.GetKeyDown(KeyCode.D)) {
+            player.Stop();
         }
         if (Input.GetMouseButtonDown(0)) {
-            player.Shoot();
+            player.Attack();
         }
     }
 
